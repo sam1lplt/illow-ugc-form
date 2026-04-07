@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pillow Dream Creators ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <img src="logo.png" alt="Pillow Market Logo" class="loader-logo">
+            <div class="loader-clouds">
+                <div class="l-cloud l-cloud-1"></div>
+                <div class="l-cloud l-cloud-2"></div>
+                <div class="l-cloud l-cloud-3"></div>
+            </div>
+            <div class="loader-text">Pillow Dream Creators'a Hoşgeldin</div>
+        </div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="night-sky"></div>
+    <div class="stars" id="stars"></div>
+    
+    <div class="moon" id="moon">
+        <div class="moon-glow"></div>
+    </div>
+    
+    <div class="clouds" id="clouds">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="container">
+        <div class="glass-panel" id="form-panel">
+            <header class="header">
+                <img src="logo.png" alt="Pillow Market Logo" class="brand-logo">
+                <h1>Pillow Dream Creators <span class="sparkle">✨</span></h1>
+                <div class="program-info">
+                    <div class="info-block fade-in-up delay-1">
+                        <h3>Pillow Dream Creators Nedir? ☁️✨</h3>
+                        <p>Sıkıcı stüdyo reklamlarını, ezberletilmiş yapay metinleri ve eski nesil pazarlamayı unut. Pillow Dream Creators; uykunun, estetiğin ve konforun yeni nesil yüzlerinden oluşan özel ve seçkin bir içerik üreticisi komünitesidir!</p>
+                        <p>Pillow Market olarak biz, insanlara sadece yastık değil; güne enerjik başlama hissi ve ağrısız sabahlar sunuyoruz. Bu konforu en doğal, en samimi ve kendi yaşam alanının estetiğiyle anlatacak o vizyoner kişileri arıyoruz.</p>
+                        <p>Pillow Dream Creators ekibinin bir parçası olduğunda, sadece markaya dışarıdan video çeken biri olmazsın; markanın ruhunu yansıtan, konforu kitlelere ulaştıran vizyoner yüzlerimizden biri olursun.</p>
+                    </div>
+
+                    <div class="info-block fade-in-up delay-2">
+                        <h3>Süreç Tam Olarak Nasıl İşliyor? 🤝</h3>
+                        <ul class="process-list">
+                            <li><strong>Ürünü Deneyimle:</strong> Seçilmiş Pillow Market ürünlerini adresine gönderiyoruz.</li>
+                            <li><strong>Kendi Vibe'ını Yansıt:</strong> Kendi odanın estetiğinde, kameraya kendi enerjinle konuştuğun doğal kısa videolar (TikTok/Reels) çekiyorsun.</li>
+                            <li><strong>Kazan ve Uyu:</strong> Hem profesyonel olarak emeğinin karşılığını (çekim ücretini) alıyorsun hem de deneyimlediğin bu konforlu ürünler sana hediye olarak kalıyor. Kısacası hem içerik üreterek ek gelir sağlıyor hem de uyku kaliteni artırıyorsun! 🎁</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-block fade-in-up delay-3">
+                        <h3>Kimi Arıyoruz?</h3>
+                        <p>Telefonunun kamerasını açtığında rahat olan, "hook" (kanca) yapısını bilen, kendi odasında temiz ve samimi bir ışık kurabilen herkes bu rüyanın bir parçası olabilir.</p>
+                        <p>İster 1-2 videoluk kısa bir serüven, ister bu ekibin kalıcı ve düzenli bir parçası ol... Seçim senin.</p>
+                    </div>
+
+                    <div class="info-glow-text fade-in-up delay-4">
+                        Hazırsan, rüya gibi bir işbirliğine uyanıyoruz! 🌙
+                    </div>
+                </div>
+            </header>
+
+            <form id="creator-form" class="dream-form">
+                <div class="input-group">
+                    <label for="fullName">Adın Soyadın</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Adın ve Soyadın">
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">Numaran</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+90 555 123 45 67">
+                </div>
+
+                <div class="input-group">
+                    <label for="occupation">Şu Anki Ana Mesleğin / Okuduğun Bölüm</label>
+                    <input type="text" id="occupation" name="occupation" required placeholder="Gündüzleri ne yaparsın?">
+                </div>
+
+                <div class="input-group">
+                    <label>Hangi platformları kullanıyorsun?</label>
+                    <div class="platform-checkboxes">
+                        <label class="platform-label"><input type="checkbox" name="platforms" value="tiktok"> TikTok</label>
+                        <label class="platform-label"><input type="checkbox" name="platforms" value="instagram"> Instagram</label>
+                        <label class="platform-label"><input type="checkbox" name="platforms" value="youtube"> YouTube</label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="social_url">En Aktif Olduğun Sosyal Medya Profilin</label>
+                    <input type="text" id="social_url" name="social_url" required placeholder="instagram.com/... veya sadece @kullaniciadi">
+                </div>
+
+                <div class="input-group">
+                    <label for="ugc_video">Şovunu Yap! En İyi UGC Videon</label>
+                    <input type="text" id="ugc_video" name="ugc_video" required placeholder="TikTok veya Reels video linkin...">
+                </div>
+
+                <div class="input-group">
+                    <label for="living_space">Kendi yaşam alanını nasıl tanımlarsın?</label>
+                    <div class="select-wrapper">
+                        <select id="living_space" name="living_space" required>
+                            <option value="" disabled selected>Bir atmosfer seç...</option>
+                            <option value="estetik">Estetik ve Aydınlık</option>
+                            <option value="minimalist">Minimalist ve Sade</option>
+                            <option value="cozy">Cozy, Dağınık ama Samimi</option>
+                            <option value="odak">Sadece ürüne odaklanabileceğim temiz bir arka plan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="work_style">Birlikte nasıl çalışalım?</label>
+                    <div class="select-wrapper">
+                        <select id="work_style" name="work_style" required>
+                            <option value="" disabled selected>Planın nedir?</option>
+                            <option value="freelance">1-2 video çeker yoluma bakarım</option>
+                            <option value="kalici">Pillow Dream Creators'ın kalıcı bir parçası olmak isterim</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="two-cols">
+                    <div class="input-group">
+                        <label for="videos_per_week">Haftalık Video Üretimi</label>
+                        <input type="number" id="videos_per_week" name="videos_per_week" required placeholder="Adet" min="1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="budget">Tek Video İçin Bütçe Beklentisi (TL)</label>
+                        <input type="number" id="budget" name="budget" required placeholder="₺" min="0">
+                    </div>
+                </div>
+
+                <div class="terms-group">
+                    <div class="custom-checkbox-row" style="display: flex; align-items: flex-start; gap: 1rem; user-select: none;">
+                        <label class="custom-checkbox-wrapper" style="margin: 0; cursor: pointer;">
+                            <input type="checkbox" id="kvkk" name="kvkk" required>
+                            <div class="custom-checkbox">
+                                <div class="star-animation"></div>
+                                <svg class="check-icon" viewBox="0 0 24 24">
+                                    <path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                        </label>
+                        <span class="terms-text" style="padding-top: 0.1rem;"><button type="button" class="text-link" id="open-kvkk">KVKK Aydınlatma Metni</button>'ni okudum, onaylıyorum.</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <span class="btn-text">Başvurumu Gönder</span>
+                    <span class="btn-glow"></span>
+                </button>
+            </form>
+        </div>
+
+        <div class="success-panel hidden" id="success-panel">
+            <div class="success-content">
+                <div class="success-icon">☁️✨</div>
+                <h2>Başvurunu Aldık!</h2>
+                <p>Pillow Dream Creators ailesine gösterdiğin ilgi için teşekkürler! Portfolyonu inceleyip çok yakında sana dönüş yapacağız. O zamana kadar tatlı rüyalar...</p>
+                
+                <div class="success-links">
+                    <a href="https://pillowmarket.com.tr" target="_blank" class="success-link web-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <span>pillowmarket.com.tr</span>
+                    </a>
+                    <a href="https://instagram.com/pillowmarketpm" target="_blank" class="success-link ig-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>@pillowmarketpm</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="container faq-container">
+        <div class="glass-panel" id="faq-panel">
+            <h2 class="faq-title">Aklına Takılanlar (S.S.S) ☁️</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">1. Takipçi sayım çok düşük, yine de başvurabilir miyim?</button>
+                <div class="faq-answer">
+                    <p>Kesinlikle! Bizim için kaç takipçin olduğu değil, videonun kalitesi, kameradaki enerjin ve ışığı nasıl kullandığın önemli. Odanın vibe'ı ve senin doğallığın iyi olduktan sonra takipçi sayın sıfır bile olsa bizimlesin.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">2. Çekim ücretleri ne kadar?</button>
+                <div class="faq-answer">
+                    <p>Bu tamamen senin portfolyona, içerik kalitene ve vizyonuna bağlı! O yüzden formda "Bütçen/beklentin nedir?" diye soruyoruz. Seninle enerjimiz tutarsa, karşılıklı olarak iki tarafı da mutlu edecek o rakamı zaten buluruz.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">3. Ürünleri geri gönderecek miyim?</button>
+                <div class="faq-answer">
+                    <p>Hayır! Pillow Market ürünlerini deneyimlemen ve o konforu gerçekten yaşaman bizim için önemli. O yüzden sana gönderdiğimiz yastıklar ve uyku ürünleri tamamen senin oluyor. Hem kazanıyor hem de daha iyi uyuyorsun. 🎁</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">4. Videoları çekmek için ne kadar sürem var?</button>
+                <div class="faq-answer">
+                    <p>Kargo kapına ulaştığı andan itibaren 7 gün içinde o efsanevi videoyu senden bekliyoruz. Hızlı iletişim ve söz verilen sürede teslimat, Dream Creators ekibinin en çok değer verdiği kuraldır.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">5. Senaryoyu (metni) siz mi veriyorsunuz, ben mi yazıyorum?</button>
+                <div class="faq-answer">
+                    <p>İkisi de! Sana markamızın ana mesajlarını, ürünün çözdüğü problemleri (örneğin boyun ağrısı) ve istediğimiz "kanca" (hook) yapılarını içeren net bir brief veriyoruz. Ama cümlenin gidişatını, esprileri ve doğallığı tamamen senin yaratıcılığına bırakıyoruz. Kendi tarzından çıkmanı istemiyoruz.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">6. Başvurumun sonucunu nasıl öğreneceğim?</button>
+                <div class="faq-answer">
+                    <p>Portfolyonu ve yanıtlarını inceledikten sonra, eğer enerjilerimiz uyuşuyorsa birkaç gün içinde formda bıraktığın numaradan sana doğrudan WhatsApp üzerinden yazacağız. Gözün mesajlarda olsun! 📱</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- KVKK Modal -->
+    <div class="modal-overlay hidden" id="kvkk-modal">
+        <div class="modal-content glass-panel">
+            <button class="modal-close" id="close-kvkk">&times;</button>
+            <div class="modal-header">
+                <h2>KVKK Aydınlatma Metni</h2>
+            </div>
+            <div class="modal-body">
+                <h4>1. Veri Sorumlusunun Kimliği</h4>
+                <p>Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) uyarınca, veri sorumlusu sıfatıyla Pillow Market Ev Tekstili ve Sanayi Limited Şirketi (“Pillow Market” veya “Şirket”) tarafından, "Pillow Dream Creators" başvuru formunu dolduran içerik üreticisi adaylarını bilgilendirmek amacıyla hazırlanmıştır.</p>
+                
+                <h4>2. İşlenen Kişisel Verileriniz ve İşlenme Amaçları</h4>
+                <p>Başvuru formunu doldurmanız sürecinde bizimle paylaştığınız aşağıdaki kişisel verileriniz, yalnızca belirtilen amaçlar doğrultusunda işlenmektedir:</p>
+                <ul>
+                    <li><strong>Kimlik Bilgileriniz (Ad, Soyad):</strong> Size doğru hitap edebilmemiz ve başvuru sürecinizi kimliğinizle eşleştirebilmemiz,</li>
+                    <li><strong>İletişim Bilgileriniz (Telefon Numarası, Sosyal Medya Profilleri):</strong> Başvurunuzun olumlu değerlendirilmesi durumunda işbirliği detaylarını görüşmek üzere sizinle WhatsApp veya telefon üzerinden iletişime geçebilmemiz,</li>
+                    <li><strong>Mesleki ve Görsel/İşitsel Verileriniz:</strong> Markamızın vizyonuna ve kampanya dinamiklerimize uygunluğunuzun değerlendirilmesi,</li>
+                    <li><strong>Finansal Beklentileriniz (Talep Edilen Bütçe):</strong> Olası bir işbirliği için ticari koşulların ön değerlendirmesinin yapılması,</li>
+                </ul>
+                <p>amacıyla, dürüstlük kurallarına uygun, doğru ve güncel olarak, belirli, açık ve meşru amaçlar için işlenmektedir.</p>
+
+                <h4>3. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi</h4>
+                <p>Kişisel verileriniz, "Pillow Dream Creators" dijital başvuru formu aracılığıyla elektronik ortamda toplanmaktadır. Bu veriler, KVKK’nın 5/2 (c) ve 5/2 (f) maddelerine dayanarak, ayrıca onay kutucuğunu işaretlemenizle verdiğiniz açık rızanıza istinaden işlenmektedir.</p>
+
+                <h4>4. İşlenen Kişisel Verilerin Kimlere ve Hangi Amaçla Aktarılabileceği</h4>
+                <p>Pillow Market olarak, topladığımız bu kişisel verileri kesinlikle üçüncü şahıslara satmıyor veya pazarlama amacıyla paylaşmıyoruz. Verileriniz yalnızca güvenli bulut veri tabanı altyapı sağlayıcılarına (Firebase) ve yetkili kamu kurum ve kuruluşlarına aktarılabilir. Başvurusu olumsuz sonuçlanan adayların verileri dönemsel olarak imha edilmektedir.</p>
+
+                <h4>5. KVKK Kapsamındaki Haklarınız</h4>
+                <p>KVKK’nın 11. maddesi uyarınca Pillow Market’a başvurarak; kişisel verilerinizle ilgili bilgi talep etme ve silinmesini isteme hakkına sahipsiniz. Bu haklarınızı kullanmak için <strong>marketing@pillowmarket.com.tr</strong> adresi üzerinden bizimle her zaman iletişime geçebilirsiniz.</p>
+                
+                <p class="modal-footer-note"><em>Formun altındaki onay kutucuğunu işaretleyerek, yukarıdaki aydınlatma metnini okuduğunuzu ve kişisel verilerinizin işlenmesine onay verdiğinizi kabul etmiş olursunuz.</em></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
