@@ -1,7 +1,0 @@
-{
-  "name": "pillow-ugc",
-  "scripts": {
-    "dev": "cd portal-app && npm run dev",
-    "build": "cd portal-app && npm run build"
-  }
-}
