@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+body {
+  background: radial-gradient(ellipse at top, #16152e 0%, #0b0a1a 70%);
+  background-attachment: fixed;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.glass-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.input-glass {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: white;
+  border-radius: 12px;
+  transition: all 0.3s;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+.input-glass::placeholder { color: rgba(168,166,205,0.5); }
+.input-glass:focus {
+  outline: none;
+  border-color: #B088F9;
+  background: rgba(176,136,249,0.1);
+  box-shadow: 0 0 0 3px rgba(176,136,249,0.15);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #B088F9 0%, #895CF2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(137,92,242,0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(137,92,242,0.4); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(176,136,249,0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(176,136,249,0.6); }
+
+/* Night background elements */
+.bg-stars {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.3) 0%, transparent 100%);
+}

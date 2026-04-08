@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HQ Ops Portal</title>
+    <!-- Security: Prevent indexing by search engines -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0b0a1a;
+            --surface: rgba(255,255,255,0.05);
+            --border: rgba(255,255,255,0.1);
+            --accent: #B088F9;
+            --accent2: #895CF2;
+            --text: #ffffff;
+            --muted: rgba(255,255,255,0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(ellipse at top, #16152e 0%, #0b0a1a 70%);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        /* ── LOGIN ── */
+        #login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .login-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .login-card h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.3rem;
+            background: linear-gradient(to right, #fff, #B088F9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-card p {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        .field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+
+        .field label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(176,136,249,0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .field input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(176,136,249,0.1);
+            box-shadow: 0 0 0 3px rgba(176,136,249,0.15);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, #B088F9, #895CF2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 20px rgba(137,92,242,0.35);
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(137,92,242,0.45); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        #login-error {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #fca5a5;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* ── ADMIN PANEL ── */
+        #admin-panel {
+            display: none;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #B088F9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-left p { font-size: 0.8rem; color: var(--muted); }
+
+        #logout-btn {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.25);
+            color: #fca5a5;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        #logout-btn:hover { background: rgba(239,68,68,0.25); }
+
+        main { padding: 2rem; max-width: 1400px; margin: 0 auto; }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card .stat-num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Search & Filter */
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            flex: 1;
+            min-width: 200px;
+            transition: all 0.3s;
+        }
+        .search-input:focus { outline: none; border-color: var(--accent); }
+        .search-input::placeholder { color: var(--muted); }
+
+        .filter-select {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .filter-select:focus { outline: none; border-color: var(--accent); }
+
+        /* Table */
+        .table-wrapper {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead tr {
+            background: rgba(176,136,249,0.08);
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+        td {
+            padding: 0.9rem 1.2rem;
+            font-size: 0.85rem;
+            color: var(--text);
+            vertical-align: middle;
+        }
+
+        td.muted { color: var(--muted); }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-purple { background: rgba(176,136,249,0.2); color: #B088F9; }
+        .badge-green  { background: rgba(34,197,94,0.15); color: #86efac; }
+        .badge-blue   { background: rgba(59,130,246,0.15); color: #93c5fd; }
+
+        .platform-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+        a.link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        a.link:hover { text-decoration: underline; }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--muted);
+        }
+
+        .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+
+        #loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+        }
+
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid rgba(176,136,249,0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .row-count {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-left: auto;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            main { padding: 1rem; }
+            table { font-size: 0.78rem; }
+            th, td { padding: 0.7rem 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="login-screen">
+    <div class="login-card">
+        <h1>☁️ Admin Paneli</h1>
+        <p>Pillow Dream Creators yönetim girişi</p>
+
+        <div id="login-error"></div>
+
+        <form id="login-form">
+            <div class="field">
+                <label>E-Posta</label>
+                <input type="email" id="login-email" placeholder="••••••••@••••••••.com" required autocomplete="email">
+            </div>
+            <div class="field">
+                <label>Şifre</label>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn" id="login-btn">Giriş Yap</button>
+        </form>
+    </div>
+</div>
+
+<!-- ── ADMIN PANEL ── -->
+<div id="admin-panel">
+    <header>
+        <div class="header-left">
+            <h2>☁️ Pillow Dream Creators</h2>
+            <p id="admin-email-display">Başvuru Yönetim Paneli</p>
+            <p id="admin-session-badge" style="font-size:0.7rem;color:rgba(176,136,249,0.6);margin-top:2px">🔒 Güvenli Oturum</p>
+        </div>
+        <button id="logout-btn">Çıkış Yap</button>
+    </header>
+
+    <main>
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-total">—</div>
+                <div class="stat-label">Toplam Başvuru</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-tiktok">—</div>
+                <div class="stat-label">TikTok</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-instagram">—</div>
+                <div class="stat-label">Instagram</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-avg-budget">—</div>
+                <div class="stat-label">Ort. Bütçe (₺)</div>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <input type="search" class="search-input" id="search" placeholder="🔍  İsim, telefon veya sosyal medya ara...">
+            <select class="filter-select" id="filter-platform">
+                <option value="">Tüm Platformlar</option>
+                <option value="tiktok">TikTok</option>
+                <option value="instagram">Instagram</option>
+                <option value="youtube">YouTube</option>
+            </select>
+            <select class="filter-select" id="filter-work">
+                <option value="">Tüm Çalışma Tipleri</option>
+                <option value="freelance">Freelance</option>
+                <option value="kalici">Kalıcı</option>
+            </select>
+            <span class="row-count" id="row-count"></span>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <div id="loading">
+                <div class="spinner"></div>
+                Başvurular yükleniyor...
+            </div>
+            <table id="data-table" style="display:none">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad Soyad</th>
+                        <th>Telefon</th>
+                        <th>Meslek</th>
+                        <th>Platform</th>
+                        <th>Sosyal Medya</th>
+                        <th>UGC Video</th>
+                        <th>Çalışma</th>
+                        <th>Haftalık</th>
+                        <th>Bütçe (₺)</th>
+                        <th>Tarih</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+            <div id="empty-state" class="empty-state" style="display:none">
+                <div class="icon">📭</div>
+                <p>Henüz başvuru yok veya aramanızla eşleşen kayıt bulunamadı.</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDWvIuBR-4f9eBQb0OvdwKnUfSJFyCaoz4",
+    authDomain: "pillow-ugc-database.firebaseapp.com",
+    projectId: "pillow-ugc-database",
+    storageBucket: "pillow-ugc-database.firebasestorage.app",
+    messagingSenderId: "122351696078",
+    appId: "1:122351696078:web:7b8b7d5bfa0f3f646b389f"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let allApplications = [];
+let unsubscribeFirestore = null;
+
+// ── AUTH STATE ──────────────────────────────────────────────────────
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        // Email gizlenir — sadece domain gösterilir
+        const emailParts = user.email.split('@');
+        const masked = '••••••••@' + emailParts[1];
+        document.getElementById('admin-email-display').textContent = masked;
+        loadApplications();
+    } else {
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('admin-panel').style.display = 'none';
+        if (unsubscribeFirestore) { unsubscribeFirestore(); unsubscribeFirestore = null; }
+    }
+});
+
+// ── BRUTE FORCE PROTECTION ──────────────────────────────────────────
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_MS = 60_000; // 60 saniye
+let loginAttempts = 0;
+let lockoutUntil = 0;
+
+// ── XSS Sanitize ────────────────────────────────────────────────────
+function sanitize(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .trim();
+}
+
+// ── LOGIN ───────────────────────────────────────────────────────────
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('login-btn');
+    const errorEl = document.getElementById('login-error');
+
+    // Lockout check
+    if (Date.now() < lockoutUntil) {
+        const remaining = Math.ceil((lockoutUntil - Date.now()) / 1000);
+        errorEl.textContent = `Çok fazla hatalı giriş. ${remaining} saniye bekleyin.`;
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    // Sanitize inputs (XSS)
+    const email = sanitize(document.getElementById('login-email').value);
+    const password = document.getElementById('login-password').value; // şifre sanitize edilmez, değiştirilmez
+
+    if (!email || !password) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Giriş yapılıyor...';
+    errorEl.style.display = 'none';
+
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        loginAttempts = 0; // reset on success
+    } catch (err) {
+        loginAttempts++;
+        let msg = 'Giriş başarısız.';
+        if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential')
+            msg = `E-posta veya şifre hatalı. (${loginAttempts}/${MAX_ATTEMPTS})`;
+        else if (err.code === 'auth/too-many-requests')
+            msg = 'Firebase: Çok fazla deneme. Lütfen bekleyin.';
+
+        if (loginAttempts >= MAX_ATTEMPTS) {
+            lockoutUntil = Date.now() + LOCKOUT_MS;
+            loginAttempts = 0;
+            msg = `${MAX_ATTEMPTS} hatalı giriş. 60 saniye kilitlendi. 🔒`;
+        }
+
+        errorEl.textContent = msg;
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Giriş Yap';
+    }
+});
+
+// ── LOGOUT ─────────────────────────────────────────────────────────
+document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+
+// ── LOAD DATA ──────────────────────────────────────────────────────
+function loadApplications() {
+    const q = query(collection(db, 'applications'), orderBy('created_at', 'desc'));
+    unsubscribeFirestore = onSnapshot(q, (snap) => {
+        allApplications = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        updateStats();
+        renderTable();
+    }, (err) => {
+        console.error(err);
+        document.getElementById('loading').innerHTML = '<p style="color:#fca5a5">Veri yüklenirken hata oluştu.</p>';
+    });
+}
+
+// ── STATS ──────────────────────────────────────────────────────────
+function updateStats() {
+    const total = allApplications.length;
+    const tiktok = allApplications.filter(a => (a.platforms || []).includes('tiktok')).length;
+    const ig = allApplications.filter(a => (a.platforms || []).includes('instagram')).length;
+    const budgets = allApplications.map(a => parseFloat(a.budget)).filter(n => !isNaN(n));
+    const avg = budgets.length ? Math.round(budgets.reduce((a,b) => a+b, 0) / budgets.length) : 0;
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-tiktok').textContent = tiktok;
+    document.getElementById('stat-instagram').textContent = ig;
+    document.getElementById('stat-avg-budget').textContent = avg || '—';
+}
+
+// ── RENDER TABLE ───────────────────────────────────────────────────
+function renderTable() {
+    const search = document.getElementById('search').value.toLowerCase();
+    const platformFilter = document.getElementById('filter-platform').value;
+    const workFilter = document.getElementById('filter-work').value;
+
+    let data = allApplications.filter(a => {
+        const matchSearch = !search ||
+            (a.fullName || '').toLowerCase().includes(search) ||
+            (a.phone || '').includes(search) ||
+            (a.social_url || '').toLowerCase().includes(search) ||
+            (a.occupation || '').toLowerCase().includes(search);
+        const matchPlatform = !platformFilter || (a.platforms || []).includes(platformFilter);
+        const matchWork = !workFilter || a.work_style === workFilter;
+        return matchSearch && matchPlatform && matchWork;
+    });
+
+    document.getElementById('loading').style.display = 'none';
+    const table = document.getElementById('data-table');
+    const empty = document.getElementById('empty-state');
+    const tbody = document.getElementById('table-body');
+    const rowCount = document.getElementById('row-count');
+
+    rowCount.textContent = `${data.length} kayıt`;
+
+    if (data.length === 0) {
+        table.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+    }
+
+    table.style.display = 'table';
+    empty.style.display = 'none';
+
+    tbody.innerHTML = data.map((a, i) => {
+        const platforms = Array.isArray(a.platforms) ? a.platforms : (a.platforms ? [a.platforms] : []);
+        const platformBadges = platforms.map(p =>
+            `<span class="badge badge-purple">${p}</span>`
+        ).join('');
+        
+        const socialUrl = a.social_url ? (a.social_url.startsWith('http') ? a.social_url : 'https://' + a.social_url) : '';
+        const videoUrl = a.ugc_video ? (a.ugc_video.startsWith('http') ? a.ugc_video : 'https://' + a.ugc_video) : '';
+        
+        const workLabel = a.work_style === 'kalici' ? 'Kalıcı' : a.work_style === 'freelance' ? 'Freelance' : (a.work_style || '—');
+        const workBadge = a.work_style === 'kalici' ? 'badge-green' : 'badge-blue';
+        
+        const dateStr = a.created_at ? new Date(a.created_at).toLocaleString('tr-TR', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        }) : '—';
+
+        return `<tr>
+            <td class="muted">${i + 1}</td>
+            <td><strong>${a.fullName || '—'}</strong></td>
+            <td class="muted" style="font-family:monospace;font-size:0.8rem">${a.phone || '—'}</td>
+            <td class="muted">${a.occupation || '—'}</td>
+            <td><div class="platform-tags">${platformBadges || '<span class="muted">—</span>'}</div></td>
+            <td>${socialUrl ? `<a href="${socialUrl}" target="_blank" class="link">🔗 ${a.social_url}</a>` : '<span class="muted">—</span>'}</td>
+            <td>${videoUrl ? `<a href="${videoUrl}" target="_blank" class="link" title="${a.ugc_video}" style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block">🎬 ${a.ugc_video}</a>` : '<span class="muted">—</span>'}</td>
+            <td><span class="badge ${workBadge}">${workLabel}</span></td>
+            <td class="muted" style="text-align:center">${a.videos_per_week || '—'}</td>
+            <td><strong style="color:#B088F9">₺${a.budget || '—'}</strong></td>
+            <td class="muted" style="font-size:0.78rem;white-space:nowrap">${dateStr}</td>
+        </tr>`;
+    }).join('');
+}
+
+// ── FILTERS ─────────────────────────────────────────────────────────
+document.getElementById('search').addEventListener('input', renderTable);
+document.getElementById('filter-platform').addEventListener('change', renderTable);
+document.getElementById('filter-work').addEventListener('change', renderTable);
+</script>
+</body>
+</html>

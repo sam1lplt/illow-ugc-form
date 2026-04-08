@@ -49,27 +49,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Form submission processing
+    // Form submission — Firestore'a kaydet
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Button loading state
         const btnText = submitBtn.querySelector('.btn-text');
         const originalText = btnText.innerText;
         btnText.innerText = "Gönderiliyor... ✨";
         submitBtn.style.pointerEvents = 'none';
 
-        // Gather data (Dummy preparation)
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        console.log("Gönderilen veriler:", data);
+        
+        // Platforms (checkboxlar multiple olduğu için ayrıca topla)
+        data.platforms = formData.getAll('platforms');
+        
+        // Telefon numarasını document ID olarak kullan (+90 formatında)
+        let phone = (data.phone || '').toString().replace(/\s/g, '');
+        if (!phone.startsWith('+')) phone = '+90' + phone.replace(/^0/, '');
+        data.phone = phone;
+        data.status = 'incelemede';
+        data.created_at = new Date().toISOString();
 
-        // Simulate API Request with dummy fetch / delay
         try {
-            // Using a simple Promise to fake a network request of 1.5 seconds
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            const { initializeApp, getApps, getApp } = await import("https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js");
+            const { getFirestore, doc, setDoc } = await import("https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js");
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyDWvIuBR-4f9eBQb0OvdwKnUfSJFyCaoz4",
+                authDomain: "pillow-ugc-database.firebaseapp.com",
+                projectId: "pillow-ugc-database",
+                storageBucket: "pillow-ugc-database.firebasestorage.app",
+                messagingSenderId: "122351696078",
+                appId: "1:122351696078:web:7b8b7d5bfa0f3f646b389f"
+            };
+
+            const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+            const db = getFirestore(app);
+
+            // Document ID = telefon numarası (portal ile eşleşsin diye)
+            await setDoc(doc(db, 'applications', phone), data);
             
-            // On success
             showSuccess();
             
         } catch (error) {
@@ -81,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         }
     });
+
 
     function showSuccess() {
         // Fade out form panel
