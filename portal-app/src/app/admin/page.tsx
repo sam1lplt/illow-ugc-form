@@ -24,6 +24,11 @@ export default function AdminPage() {
   const [trackingInputs, setTrackingInputs] = useState<Record<string, string>>({});
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string>("");
+
+  const CITIES = [
+    "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin", "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkâri", "Hatay", "Iğdır", "Isparta", "İstanbul", "İzmir", "Kahramanmaraş", "Karabük", "Karaman", "Kars", "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir", "Kilis", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Osmaniye", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Şanlıurfa", "Şırnak", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat", "Zonguldak"
+  ];
 
   useEffect(() => {
     if (loading) return;
@@ -71,16 +76,30 @@ export default function AdminPage() {
           <h1 className="text-xl font-bold bg-gradient-to-r from-white to-purple-300 bg-clip-text text-transparent">Admin HQ Panel</h1>
           <p className="text-xs text-gray-400">Toplam {apps.length} başvuru</p>
         </div>
-        <button onClick={() => signOut(auth).then(() => router.push("/login"))} className="flex items-center gap-2 text-sm text-red-300 hover:text-red-100 transition-colors">
-          <LogOut className="w-4 h-4" /> Çıkış
-        </button>
+        
+        <div className="flex items-center gap-3">
+          <select 
+            value={selectedCity} 
+            onChange={(e) => setSelectedCity(e.target.value)}
+            className="bg-white/5 border border-white/10 rounded-lg text-xs px-3 py-2 text-gray-300 focus:outline-none focus:border-purple-400 transition-all cursor-pointer"
+          >
+            <option value="">Tüm Şehirler</option>
+            {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+
+          <button onClick={() => signOut(auth).then(() => router.push("/login"))} className="flex items-center gap-2 text-sm text-red-300 hover:text-red-100 transition-colors bg-red-950/20 px-3 py-2 rounded-lg border border-red-500/20">
+            <LogOut className="w-4 h-4" /> Çıkış
+          </button>
+        </div>
       </header>
 
       {/* Kanban */}
       <div className="flex-1 overflow-x-auto overflow-y-hidden pb-4">
         <div className="flex gap-4 h-full items-start" style={{ minWidth: `${COLS.length * 290}px` }}>
           {COLS.map(col => {
-            const cards = apps.filter(a => (a.status || "incelemede") === col.id);
+            const cards = apps
+              .filter(a => (a.status || "incelemede") === col.id)
+              .filter(a => !selectedCity || a.city === selectedCity);
             const colIdx = STATUS_ORDER.indexOf(col.id);
             return (
               <div key={col.id} className={`w-68 flex flex-col glass rounded-2xl border-t-4 ${col.color} shrink-0`} style={{ width: 272 }}>
@@ -95,13 +114,18 @@ export default function AdminPage() {
                       <div key={app.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-purple-400/30 transition-all">
                         {/* Card body */}
                         <div className="p-3">
-                          <div className="flex justify-between items-start mb-1">
+                          <div className="flex justify-between items-center mb-1">
                             <span className="font-semibold text-white text-sm truncate">{app.fullName || "—"}</span>
+                            <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded font-medium">
+                              {app.city || "—"}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center mb-2">
+                            <p className="text-xs text-gray-500 font-mono">{app.phone || app.id}</p>
                             <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded font-mono shrink-0 ml-1">
                               {app.budget ? `₺${app.budget}` : "—"}
                             </span>
                           </div>
-                          <p className="text-xs text-gray-500 font-mono mb-2">{app.phone || app.id}</p>
                           <div className="flex gap-3 text-xs">
                             {app.social_url && (
                               <a href={app.social_url?.startsWith("http") ? app.social_url : `https://${app.social_url}`} target="_blank" rel="noreferrer" className="text-purple-400 hover:text-purple-200 flex items-center gap-1">

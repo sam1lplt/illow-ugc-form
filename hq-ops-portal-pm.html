@@ -177,9 +177,17 @@
         /* Stats */
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1rem;
             margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .stats { grid-template-columns: 1fr; }
         }
 
         .stat-card {
@@ -246,10 +254,15 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        table { width: 100%; border-collapse: collapse; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse;
+            min-width: 1100px; /* Force scroll on small screens */
+        }
 
         thead tr {
             background: rgba(176,136,249,0.08);
@@ -338,10 +351,31 @@
         }
 
         @media (max-width: 768px) {
-            header { padding: 1rem; }
+            header { 
+                padding: 1rem; 
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            .header-left p#admin-session-badge { justify-content: center; display: flex; }
+            
             main { padding: 1rem; }
+            
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-input { width: 100%; }
+            .filter-select { width: 100%; }
+            .row-count { text-align: center; margin: 0; }
+
             table { font-size: 0.78rem; }
             th, td { padding: 0.7rem 0.8rem; }
+
+            .login-card {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
         }
     </style>
 </head>
@@ -415,6 +449,90 @@
                 <option value="freelance">Freelance</option>
                 <option value="kalici">Kalıcı</option>
             </select>
+            <select class="filter-select" id="filter-city">
+                <option value="">Tüm Şehirler</option>
+                <option value="Adana">Adana</option>
+                <option value="Adıyaman">Adıyaman</option>
+                <option value="Afyonkarahisar">Afyonkarahisar</option>
+                <option value="Ağrı">Ağrı</option>
+                <option value="Aksaray">Aksaray</option>
+                <option value="Amasya">Amasya</option>
+                <option value="Ankara">Ankara</option>
+                <option value="Antalya">Antalya</option>
+                <option value="Ardahan">Ardahan</option>
+                <option value="Artvin">Artvin</option>
+                <option value="Aydın">Aydın</option>
+                <option value="Balıkesir">Balıkesir</option>
+                <option value="Bartın">Bartın</option>
+                <option value="Batman">Batman</option>
+                <option value="Bayburt">Bayburt</option>
+                <option value="Bilecik">Bilecik</option>
+                <option value="Bingöl">Bingöl</option>
+                <option value="Bitlis">Bitlis</option>
+                <option value="Bolu">Bolu</option>
+                <option value="Burdur">Burdur</option>
+                <option value="Bursa">Bursa</option>
+                <option value="Çanakkale">Çanakkale</option>
+                <option value="Çankırı">Çankırı</option>
+                <option value="Çorum">Çorum</option>
+                <option value="Denizli">Denizli</option>
+                <option value="Diyarbakır">Diyarbakır</option>
+                <option value="Düzce">Düzce</option>
+                <option value="Edirne">Edirne</option>
+                <option value="Elazığ">Elazığ</option>
+                <option value="Erzincan">Erzincan</option>
+                <option value="Erzurum">Erzurum</option>
+                <option value="Eskişehir">Eskişehir</option>
+                <option value="Gaziantep">Gaziantep</option>
+                <option value="Giresun">Giresun</option>
+                <option value="Gümüşhane">Gümüşhane</option>
+                <option value="Hakkâri">Hakkâri</option>
+                <option value="Hatay">Hatay</option>
+                <option value="Iğdır">Iğdır</option>
+                <option value="Isparta">Isparta</option>
+                <option value="İstanbul">İstanbul</option>
+                <option value="İzmir">İzmir</option>
+                <option value="Kahramanmaraş">Kahramanmaraş</option>
+                <option value="Karabük">Karabük</option>
+                <option value="Karaman">Karaman</option>
+                <option value="Kars">Kars</option>
+                <option value="Kastamonu">Kastamonu</option>
+                <option value="Kayseri">Kayseri</option>
+                <option value="Kırıkkale">Kırıkkale</option>
+                <option value="Kırklareli">Kırklareli</option>
+                <option value="Kırşehir">Kırşehir</option>
+                <option value="Kilis">Kilis</option>
+                <option value="Kocaeli">Kocaeli</option>
+                <option value="Konya">Konya</option>
+                <option value="Kütahya">Kütahya</option>
+                <option value="Malatya">Malatya</option>
+                <option value="Manisa">Manisa</option>
+                <option value="Mardin">Mardin</option>
+                <option value="Mersin">Mersin</option>
+                <option value="Muğla">Muğla</option>
+                <option value="Muş">Muş</option>
+                <option value="Nevşehir">Nevşehir</option>
+                <option value="Niğde">Niğde</option>
+                <option value="Ordu">Ordu</option>
+                <option value="Osmaniye">Osmaniye</option>
+                <option value="Rize">Rize</option>
+                <option value="Sakarya">Sakarya</option>
+                <option value="Samsun">Samsun</option>
+                <option value="Siirt">Siirt</option>
+                <option value="Sinop">Sinop</option>
+                <option value="Sivas">Sivas</option>
+                <option value="Şanlıurfa">Şanlıurfa</option>
+                <option value="Şırnak">Şırnak</option>
+                <option value="Tekirdağ">Tekirdağ</option>
+                <option value="Tokat">Tokat</option>
+                <option value="Trabzon">Trabzon</option>
+                <option value="Tunceli">Tunceli</option>
+                <option value="Uşak">Uşak</option>
+                <option value="Van">Van</option>
+                <option value="Yalova">Yalova</option>
+                <option value="Yozgat">Yozgat</option>
+                <option value="Zonguldak">Zonguldak</option>
+            </select>
             <span class="row-count" id="row-count"></span>
         </div>
 
@@ -429,6 +547,7 @@
                     <tr>
                         <th>#</th>
                         <th>Ad Soyad</th>
+                        <th>Şehir</th>
                         <th>Telefon</th>
                         <th>Meslek</th>
                         <th>Platform</th>
@@ -588,6 +707,7 @@ function renderTable() {
     const search = document.getElementById('search').value.toLowerCase();
     const platformFilter = document.getElementById('filter-platform').value;
     const workFilter = document.getElementById('filter-work').value;
+    const cityFilter = document.getElementById('filter-city').value;
 
     let data = allApplications.filter(a => {
         const matchSearch = !search ||
@@ -597,7 +717,8 @@ function renderTable() {
             (a.occupation || '').toLowerCase().includes(search);
         const matchPlatform = !platformFilter || (a.platforms || []).includes(platformFilter);
         const matchWork = !workFilter || a.work_style === workFilter;
-        return matchSearch && matchPlatform && matchWork;
+        const matchCity = !cityFilter || a.city === cityFilter;
+        return matchSearch && matchPlatform && matchWork && matchCity;
     });
 
     document.getElementById('loading').style.display = 'none';
@@ -637,6 +758,7 @@ function renderTable() {
         return `<tr>
             <td class="muted">${i + 1}</td>
             <td><strong>${a.fullName || '—'}</strong></td>
+            <td class="muted" style="font-weight:500;color:var(--accent)">${a.city || '—'}</td>
             <td class="muted" style="font-family:monospace;font-size:0.8rem">${a.phone || '—'}</td>
             <td class="muted">${a.occupation || '—'}</td>
             <td><div class="platform-tags">${platformBadges || '<span class="muted">—</span>'}</div></td>
@@ -654,6 +776,7 @@ function renderTable() {
 document.getElementById('search').addEventListener('input', renderTable);
 document.getElementById('filter-platform').addEventListener('change', renderTable);
 document.getElementById('filter-work').addEventListener('change', renderTable);
+document.getElementById('filter-city').addEventListener('change', renderTable);
 </script>
 </body>
 </html>
